@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../logic/habit_provider.dart';
 import '../data/models/habit.dart';
+import '../widgets/habit_tile.dart';
 
 class HomeScreen extends ConsumerWidget {
   @override
@@ -14,23 +15,19 @@ class HomeScreen extends ConsumerWidget {
         itemCount: habits.length,
         itemBuilder: (context, index) {
           final habit = habits[index];
-          return ListTile(
-            title: Text(habit.name),
-            subtitle: Text("Streak: ${habit.streak}"),
-            trailing: Checkbox(
-              value: habit.isCompleted,
-              onChanged: (val) {
-                ref.read(habitProvider.notifier).updateHabit(
-                  index,
-                  Habit(
-                    name: habit.name,
-                    isCompleted: val ?? false,
-                    createdAt: habit.createdAt,
-                    streak: val == true ? habit.streak + 1 : 0,
-                  ),
-                );
-              },
-            ),
+          return HabitTile(
+            habit: habit,
+            onToggle: () {
+              ref.read(habitProvider.notifier).updateHabit(
+                index,
+                Habit(
+                  name: habit.name,
+                  isCompleted: !habit.isCompleted,
+                  createdAt: habit.createdAt,
+                  streak: !habit.isCompleted ? habit.streak + 1 : 0,
+                ),
+              );
+            },
           );
         },
       ),
