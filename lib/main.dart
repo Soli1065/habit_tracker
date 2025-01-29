@@ -5,8 +5,10 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'core/theme.dart';
 import 'ui/add_habit_screen.dart';
 import 'ui/home_screen.dart';
+import 'ui/settings_screen.dart';
 
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -32,20 +34,21 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomeScreen(),
-        '/addHabit': (context) => AddHabitScreen(),
+    return Consumer(
+      builder: (context, ref, child){
+        final isDarkMode = ref.watch(darkModeProvider);
+        return MaterialApp(
+          title: 'Habit Tracker',
+          debugShowCheckedModeBanner: false,
+          theme: isDarkMode ? darkTheme : lightTheme,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => HomeScreen(),
+            '/addHabit': (context) => AddHabitScreen(),
+          },
+        );
       },
     );
   }
