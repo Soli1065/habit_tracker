@@ -7,6 +7,11 @@ import '../widgets/habit_tile.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
+  bool isTodayAHabitDay(Habit habit) {
+    int today = DateTime.now().weekday - 1; // Convert Monday = 1 to 0-based index
+    return habit.repeatDays.contains(today);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final habits = ref.watch(habitProvider);
@@ -27,7 +32,8 @@ class HomeScreen extends ConsumerWidget {
                   isCompleted: !habit.isCompleted,
                   createdAt: habit.createdAt,
                   streak: !habit.isCompleted ? habit.streak + 1 : 0,
-                  category: habit.category
+                  category: habit.category,
+                  repeatDays: habit.repeatDays
                 ),
               );
             },

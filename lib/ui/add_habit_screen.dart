@@ -15,6 +15,9 @@ class AddHabitScreen extends ConsumerWidget {
     final List<String> categories = ["Health", "Productivity", "Learning", "Fitness", "Mindfulness"];
     String selectedCategory = "Health";
 
+    List<bool> selectedDays = List.filled(7, false);
+
+
 
     return Scaffold(
       appBar: AppBar(title: Text('Add Habit')),
@@ -44,11 +47,43 @@ class AddHabitScreen extends ConsumerWidget {
               },
             ),
 
+            SizedBox(height: 10),
+
+            StatefulBuilder(
+              builder: (context, setState){
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(7, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedDays[index] = !selectedDays[index];
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        margin: EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: selectedDays[index] ? Colors.blue : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(["S", "M", "T", "W", "T", "F", "S"][index]),
+                      ),
+                    );
+                  }),
+                );
+              },
+            ),
+
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 if (controller.text.isNotEmpty) {
-                  final habit = Habit(name: controller.text, createdAt: DateTime.now(), category: selectedCategory);
+                  List<int> repeatDays = [];
+                  for (int i = 0; i < selectedDays.length; i++) {
+                    if (selectedDays[i]) repeatDays.add(i);
+                  }
+                  final habit = Habit(name: controller.text, createdAt: DateTime.now(), category: selectedCategory, repeatDays: repeatDays);
                   ref.read(habitProvider.notifier).addHabit(habit);
 
                   await NotificationHelper.scheduleHabitReminder(

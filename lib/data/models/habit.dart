@@ -19,11 +19,15 @@ class Habit {
   @HiveField(4)
   String category;
 
+  @HiveField(5)
+  List<int> repeatDays; // [0 = Sunday, 1 = Monday, ..., 6 = Saturday]
+
   Habit({
     required this.name,
     this.isCompleted = false,
     required this.createdAt,
     this.streak = 0,
-    required this.category
+    required this.category,
+    required this.repeatDays
   });
 }
