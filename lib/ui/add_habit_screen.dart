@@ -31,8 +31,7 @@ class AddHabitScreen extends ConsumerWidget {
                     "Reminder: ${habit.name}",
                     "Don't forget to complete your habit today!",
 
-                    //TODO modify the time and fix its schedule
-                    DateTime.now(),
+                    8,0,
                   );
 
                   Navigator.pop(context);
