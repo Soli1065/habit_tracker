@@ -27,6 +27,7 @@ class HomeScreen extends ConsumerWidget {
                   isCompleted: !habit.isCompleted,
                   createdAt: habit.createdAt,
                   streak: !habit.isCompleted ? habit.streak + 1 : 0,
+                  category: habit.category
                 ),
               );
             },

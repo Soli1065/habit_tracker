@@ -15,7 +15,7 @@ class HabitTile extends StatelessWidget {
       child: ListTile(
         leading: Icon(Icons.check_circle, color: habit.isCompleted ? Colors.green : Colors.grey),
         title: Text(habit.name, style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text("Streak: ${habit.streak}"),
+        subtitle: Text("Streak: ${habit.streak}  -  Category: ${habit.category}"),
         trailing: Switch(value: habit.isCompleted, onChanged: (val) => onToggle()),
       ),
     );

@@ -5,10 +5,17 @@ import '../logic/habit_provider.dart';
 import '../data/models/habit.dart';
 
 class AddHabitScreen extends ConsumerWidget {
-  final _controller = TextEditingController();
+  const AddHabitScreen({super.key});
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = TextEditingController();
+
+    final List<String> categories = ["Health", "Productivity", "Learning", "Fitness", "Mindfulness"];
+    String selectedCategory = "Health";
+
+
     return Scaffold(
       appBar: AppBar(title: Text('Add Habit')),
       body: Padding(
@@ -16,14 +23,32 @@ class AddHabitScreen extends ConsumerWidget {
         child: Column(
           children: [
             TextField(
-              controller: _controller,
+              controller: controller,
               decoration: InputDecoration(labelText: 'Habit Name'),
             ),
+            SizedBox(height: 10),
+
+            StatefulBuilder(
+              builder: (context, setState){
+                return DropdownButton<String>(
+                  value: selectedCategory,
+                  items: categories.map((category) {
+                    return DropdownMenuItem(value: category, child: Text(category));
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCategory = value!;
+                    });
+                  },
+                );
+              },
+            ),
+
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                if (_controller.text.isNotEmpty) {
-                  final habit = Habit(name: _controller.text, createdAt: DateTime.now());
+                if (controller.text.isNotEmpty) {
+                  final habit = Habit(name: controller.text, createdAt: DateTime.now(), category: selectedCategory);
                   ref.read(habitProvider.notifier).addHabit(habit);
 
                   await NotificationHelper.scheduleHabitReminder(
@@ -34,11 +59,14 @@ class AddHabitScreen extends ConsumerWidget {
                     8,0,
                   );
 
-                  Navigator.pop(context);
+                  if(context.mounted) {
+                    Navigator.pop(context);
+                  }
                 }
               },
               child: const Text('Add Habit'),
-            ),          ],
+            ),
+          ],
         ),
       ),
     );

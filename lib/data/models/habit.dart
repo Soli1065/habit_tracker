@@ -16,10 +16,14 @@ class Habit {
   @HiveField(3)
   int streak;
 
+  @HiveField(4)
+  String category;
+
   Habit({
     required this.name,
     this.isCompleted = false,
     required this.createdAt,
     this.streak = 0,
+    required this.category
   });
 }
