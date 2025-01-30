@@ -5,6 +5,8 @@ import '../data/models/habit.dart';
 import '../widgets/habit_tile.dart';
 
 class HomeScreen extends ConsumerWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final habits = ref.watch(habitProvider);
