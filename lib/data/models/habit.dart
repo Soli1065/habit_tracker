@@ -22,12 +22,50 @@ class Habit {
   @HiveField(5)
   List<int> repeatDays; // [0 = Sunday, 1 = Monday, ..., 6 = Saturday]
 
+  @HiveField(6)
+  String habitType; // "Checkbox", "Numeric", "Timer"
+
+  @HiveField(7)
+  int? goalValue; // For numeric or timer-based habits
+
+  @HiveField(8)
+  int? progressValue; // Current progress
+
   Habit({
     required this.name,
     this.isCompleted = false,
     required this.createdAt,
     this.streak = 0,
     required this.category,
-    required this.repeatDays
+    required this.repeatDays,
+    required this.habitType,
+    this.goalValue,
+    this.progressValue
   });
+
+
+  Habit copyWith({
+    String? name,
+    bool? isCompleted,
+    DateTime? createdAt,
+    int? streak,
+    String? category,
+    List<int>? repeatDays,
+    String? habitType,
+    int? goalValue,
+    int? progressValue,
+  }) {
+    return Habit(
+      name: name ?? this.name,
+      isCompleted: isCompleted ?? this.isCompleted,
+      createdAt: createdAt ?? this.createdAt,
+      streak: streak ?? this.streak,
+      category: category ?? this.category,
+      repeatDays: repeatDays ?? this.repeatDays,
+      habitType: habitType ?? this.habitType,
+      goalValue: goalValue ?? this.goalValue,
+      progressValue: progressValue ?? this.progressValue,
+    );
+  }
+
 }

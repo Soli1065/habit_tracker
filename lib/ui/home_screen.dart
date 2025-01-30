@@ -27,15 +27,27 @@ class HomeScreen extends ConsumerWidget {
             onToggle: () {
               ref.read(habitProvider.notifier).updateHabit(
                 index,
-                Habit(
-                  name: habit.name,
-                  isCompleted: !habit.isCompleted,
-                  createdAt: habit.createdAt,
-                  streak: !habit.isCompleted ? habit.streak + 1 : 0,
-                  category: habit.category,
-                  repeatDays: habit.repeatDays
-                ),
+                habit.copyWith(isCompleted: !habit.isCompleted),
               );
+            },
+            onIncrement: () {
+              if (habit.progressValue! < habit.goalValue!) {
+                ref.read(habitProvider.notifier).updateHabit(
+                  index,
+                  habit.copyWith(progressValue: habit.progressValue! + 1),
+                );
+              }
+            },
+            onDecrement: () {
+              if (habit.progressValue! > 0) {
+                ref.read(habitProvider.notifier).updateHabit(
+                  index,
+                  habit.copyWith(progressValue: habit.progressValue! - 1),
+                );
+              }
+            },
+            onTimerStart: () {
+              // Open Timer Popup (Next Feature)
             },
           );
         },

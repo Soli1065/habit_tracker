@@ -18,6 +18,11 @@ class AddHabitScreen extends ConsumerWidget {
     List<bool> selectedDays = List.filled(7, false);
 
 
+    String habitType = "Checkbox";
+    int? goalValue;
+
+
+
 
     return Scaffold(
       appBar: AppBar(title: Text('Add Habit')),
@@ -75,6 +80,34 @@ class AddHabitScreen extends ConsumerWidget {
               },
             ),
 
+            SizedBox(height: 10),
+
+            StatefulBuilder(builder: (context, setState){
+              return DropdownButton<String>(
+                value: habitType,
+                items: ["Checkbox", "Numeric", "Timer"].map((type) {
+                  return DropdownMenuItem(value: type, child: Text(type));
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    habitType = value!;
+                  });
+                },
+              );
+
+            }),
+
+            SizedBox(height: 10),
+
+            if (habitType != "Checkbox") TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: "Enter goal value"),
+              onChanged: (value) => goalValue = int.tryParse(value),
+            ),
+
+
+
+
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
@@ -83,7 +116,7 @@ class AddHabitScreen extends ConsumerWidget {
                   for (int i = 0; i < selectedDays.length; i++) {
                     if (selectedDays[i]) repeatDays.add(i);
                   }
-                  final habit = Habit(name: controller.text, createdAt: DateTime.now(), category: selectedCategory, repeatDays: repeatDays);
+                  final habit = Habit(name: controller.text, createdAt: DateTime.now(), category: selectedCategory, repeatDays: repeatDays, habitType: habitType);
                   ref.read(habitProvider.notifier).addHabit(habit);
 
                   await NotificationHelper.scheduleHabitReminder(
