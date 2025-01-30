@@ -31,6 +31,14 @@ class Habit {
   @HiveField(8)
   int? progressValue; // Current progress
 
+  @HiveField(9)
+  int xp; // User earns XP for completing habits
+
+  @HiveField(10)
+  int level; // Level up after gaining enough XP
+
+
+
   Habit({
     required this.name,
     this.isCompleted = false,
@@ -40,7 +48,9 @@ class Habit {
     required this.repeatDays,
     required this.habitType,
     this.goalValue,
-    this.progressValue
+    this.progressValue,
+    this.xp = 0,
+    this.level = 0
   });
 
 
@@ -54,6 +64,8 @@ class Habit {
     String? habitType,
     int? goalValue,
     int? progressValue,
+    int? xp,
+    int? level
   }) {
     return Habit(
       name: name ?? this.name,
@@ -65,6 +77,8 @@ class Habit {
       habitType: habitType ?? this.habitType,
       goalValue: goalValue ?? this.goalValue,
       progressValue: progressValue ?? this.progressValue,
+      xp: xp ?? this.xp,
+      level: level ?? this.level
     );
   }
 

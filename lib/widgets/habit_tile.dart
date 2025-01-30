@@ -39,15 +39,14 @@ class HabitTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    habit.name,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
+                  Text("Streak: ${habit.streak} | Category: ${habit.category}"),
                   SizedBox(height: 4),
-                  Text(
-                    "Streak: ${habit.streak}  |  ${habit.category}",
-                    style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                  LinearProgressIndicator(
+                    value: habit.xp / 100, // Show XP progress
+                    backgroundColor: Colors.grey[300],
+                    color: Colors.blueAccent,
                   ),
+                  Text("XP: ${habit.xp} / 100 | Level: ${habit.level}", style: TextStyle(fontSize: 12)),
                 ],
               ),
             ),

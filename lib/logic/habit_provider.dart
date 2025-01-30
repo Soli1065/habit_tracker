@@ -23,4 +23,24 @@ class HabitNotifier extends StateNotifier<List<Habit>> {
     HabitDB.deleteHabit(index);
     state = HabitDB.getHabits();
   }
+
+
+  void completeHabit(int index) {
+    var habit = state[index];
+    int newXP = habit.xp + 10; // Earn 10 XP per completed habit
+    int newLevel = habit.level;
+
+    if (newXP >= 100) { // Level up every 100 XP
+      newXP -= 100;
+      newLevel += 1;
+    }
+
+    state[index] = habit.copyWith(
+      isCompleted: true,
+      streak: habit.streak + 1,
+      xp: newXP,
+      level: newLevel,
+    );
+  }
+
 }

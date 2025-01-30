@@ -26,13 +26,15 @@ class HabitAdapter extends TypeAdapter<Habit> {
       habitType: fields[6] as String,
       goalValue: fields[7] as int?,
       progressValue: fields[8] as int?,
+      xp: fields[9] as int,
+      level: fields[10] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Habit obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -50,7 +52,11 @@ class HabitAdapter extends TypeAdapter<Habit> {
       ..writeByte(7)
       ..write(obj.goalValue)
       ..writeByte(8)
-      ..write(obj.progressValue);
+      ..write(obj.progressValue)
+      ..writeByte(9)
+      ..write(obj.xp)
+      ..writeByte(10)
+      ..write(obj.level);
   }
 
   @override
