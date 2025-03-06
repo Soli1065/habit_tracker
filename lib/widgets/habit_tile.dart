@@ -8,7 +8,7 @@ class HabitTile extends StatelessWidget {
   final VoidCallback? onIncrement;
   final VoidCallback? onDecrement;
 
-  HabitTile({
+  const HabitTile({super.key, 
     required this.habit,
     required this.onToggle,
     this.onTimerStart,

@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final darkModeProvider = StateProvider<bool>((ref) => false);
 
 class SettingsScreen extends ConsumerWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkMode = ref.watch(darkModeProvider);

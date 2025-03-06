@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../logic/habit_provider.dart';
-import '../data/models/habit.dart';
 
 class HabitCalendarScreen extends ConsumerStatefulWidget {
   const HabitCalendarScreen({super.key});

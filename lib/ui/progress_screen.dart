@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../logic/habit_provider.dart';
-import '../data/models/habit.dart';
 
 class ProgressScreen extends ConsumerWidget {
+  const ProgressScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final habits = ref.watch(habitProvider);
